@@ -79,7 +79,7 @@ export class RegisterComponent {
           this.authService.me().subscribe({
             next: (user: User) => {
               this.sessionService.logIn(user);
-              this.router.navigate(['/posts']);
+              this.router.navigate(['/conversations']);
             },
             error: () => {
               this.onError = true;

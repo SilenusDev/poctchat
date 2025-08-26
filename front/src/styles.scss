@@ -1,16 +1,37 @@
-$primary-color: #7451eb;
+$primary-color: #1976d2;
 
-$primary-hover: darken($primary-color, 10%);
-$primary-light: lighten($primary-color, 35%);
+$primary-hover: darken($primary-color, 8%);
+$primary-light: #e3f2fd;
 $transition-speed: 0.3s;
-$shadow: rgba(0, 0, 0, 0.2);
-$shadow-hover: rgba(0, 0, 0, 0.3);
+$shadow: rgba(0, 0, 0, 0.12);
+$shadow-hover: rgba(0, 0, 0, 0.2);
 
 body {
     
     margin: 0;
     padding: 0;
 
+}
+
+/* Mise en page unifiée */
+.page-container {
+    width: 100%;
+    max-width: 992px;
+    margin: 24px auto;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+.card-unified {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 16px;
+}
+
+.section-title {
+    margin: 8px 0 16px;
+    font-weight: 600;
 }
 main { 
     width: 100%;

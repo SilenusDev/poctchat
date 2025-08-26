@@ -63,12 +63,5 @@ export class HeaderComponent implements OnInit {
     this.isMenuOpen = false;
   }
   
-  // Vérifier si l'utilisateur est sur la page des articles
-  isPostsPage(): boolean {
-    return this.currentRoute.includes('/posts');
-  }
-
-  isSubjectsPage(): boolean {
-    return this.router.url === '/subjects';
-  }
+  // Slot possible pour d'autres onglets à l'avenir
 }

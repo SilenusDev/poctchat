@@ -51,3 +51,6 @@ import 'zone.js';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+// Shim pour libs attendant `global` ou `process` (ex: sockjs)
+(window as any).global = (window as any).global || (window as any);
+(window as any).process = (window as any).process || { env: {} };

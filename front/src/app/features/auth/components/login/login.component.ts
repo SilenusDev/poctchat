@@ -33,7 +33,7 @@ export class LoginComponent  {
           localStorage.setItem('token', response.token);
           this.authService.me().subscribe((user: User) => {
             this.sessionService.logIn(user);
-            this.router.navigate(['/posts']); // ✅ Redirection unique ici
+            this.router.navigate(['/conversations']);
           });
         },
         error => this.onError = true

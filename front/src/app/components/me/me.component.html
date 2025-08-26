@@ -43,46 +43,6 @@
 <div class="liner"><hr></div>
   
 
-<section class="major">
-    <h2>Abonnements</h2>
-    <div class="card-container">
-      <div class="card" *ngFor="let subject of subjects">
-        <div class="card-body">
-          <h5 class="card-title">{{ subject.name }}</h5>
-          <p class="card-text">{{ subject.description }}</p>
-          
-          <!-- Formulaire de désabonnement -->
-          <form [formGroup]="unsubscribeForms[subject.id]" (ngSubmit)="onUnsubscribe(subject.id)">
-            <input type="hidden" formControlName="userId">
-            <input type="hidden" formControlName="subjectId">
-            <button type="submit" class="btn-outline-prim">Se désabonner</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="subjects.length === 0" class="no-subscriptions">
-      Vous n'êtes abonné à aucun sujet.
-    </div>
-</section>
+<!-- Section abonnements retirée -->
 
 
-
-<!-- <div class="me">
-    <section class="major">
-      <h2>Abonnements</h2>
-      <div class="card-container">
-        <div class="card" *ngFor="let subject of subjects">
-          <div class="card-body">
-            <h5 class="card-title">{{ subject.name }}</h5>
-            <p class="card-text">{{ subject.description }}</p>
-            <button class="btn btn-danger" (click)="unsubscribe(subject.id)">
-              Se désabonner
-            </button>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="subjects.length === 0" class="no-subscriptions">
-        Vous n'êtes abonné à aucun sujet.
-      </div>
-    </section>
-  </div> -->

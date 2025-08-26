@@ -1,0 +1,35 @@
+<section class="major" *ngIf="!isLoading">
+  <div class="user-card">
+    <h3>
+      <span *ngIf="me?.role === 'CLIENT'">CLIENT : </span>{{ me?.username }}
+    </h3>
+    <p>{{ me?.email }}</p>
+    <small>Créé le {{ me?.createdAt | date:'short' }}</small>
+    <div style="margin-top:8px" *ngIf="me?.role !== 'ADMIN'">
+      <button mat-raised-button color="primary" (click)="contactSupport()">Contacter le service client</button>
+    </div>
+  </div>
+
+  <div class="liner"><hr></div>
+
+  <div class="conversations-list">
+    <div *ngFor="let c of conversations" class="conversation-item" (click)="openConversation(c)">
+      <div class="conversation-meta">
+        <strong>Conv. #{{ c.id }}</strong>
+        <span>{{ c.createdAt | date:'short' }}</span>
+      </div>
+      <div class="participants">
+        <span>{{ c.user1.username || c.user1.name }}</span>
+        <span>—</span>
+        <span>{{ c.user2.username || c.user2.name }}</span>
+      </div>
+    </div>
+    <div *ngIf="conversations.length === 0">
+      Aucune conversation.
+    </div>
+  </div>
+</section>
+
+<div *ngIf="isLoading">Chargement...</div>
+
+

@@ -1,0 +1,9 @@
+.messages { max-height: 60vh; overflow: auto; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; }
+.message { display: flex; }
+.message.mine { justify-content: flex-end; }
+.bubble { max-width: 70%; padding: 8px 12px; border-radius: 12px; background: #f1f1f1; }
+.message.mine .bubble { background: #e0f7fa; }
+.content { white-space: pre-wrap; }
+.time { font-size: 11px; opacity: 0.7; margin-top: 4px; text-align: right; }
+.composer { display: flex; gap: 8px; }
+.composer input { flex: 1; }

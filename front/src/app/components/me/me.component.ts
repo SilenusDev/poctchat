@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { MeResponse } from 'src/app/interfaces/me-response.interface';
 import { User } from 'src/app/interfaces/user.interface';
-import { SubscriptionService } from 'src/app/services/subscription.service';
 import { UserService } from 'src/app/services/user.service';
 import { UserUpdate } from 'src/app/interfaces/userUpdate.interface';
 import { MatSnackBar } from '@angular/material/snack-bar'; // Ajoutez cette importation
@@ -20,7 +19,6 @@ export class MeComponent implements OnInit {
   
   constructor(
     private authService: AuthService,
-    private subscriptionService: SubscriptionService,
     private userService: UserService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar
@@ -69,15 +67,15 @@ export class MeComponent implements OnInit {
         // Convert User to MeResponse structure for component compatibility
         this.user = {
           id: data.id,
-          username: data.name,
-          email: data.email,
+          username: (data as any).name || (data as any).username || '',
+          email: (data as any).email || '',
           role: 'CLIENT' as any, // Default role, will be properly set by backend
-          createdAt: data.createdAt
+          createdAt: (data as any).createdAt || new Date()
         };
         this.initUserUpdateForm();
         this.initForms();
       },
-      (error) => {
+      (error: unknown) => {
         console.error('Erreur lors du chargement des données utilisateur:', error);
         this.showToaster('Erreur lors du chargement des données utilisateur', 'error');
       }
@@ -100,23 +98,7 @@ export class MeComponent implements OnInit {
     // Subject functionality removed as it's not part of the current UserDTO structure
   }
 
-  onUnsubscribe(subjectId: number): void {
-    if (!this.user) {
-      this.showToaster('Utilisateur non connecté', 'error');
-      return;
-    }
-
-    this.subscriptionService.unsubscribeSubject(this.user.id, subjectId).subscribe(
-      () => {
-        delete this.unsubscribeForms[subjectId];
-        this.showToaster('Désabonnement réussi', 'success');
-      },
-      (error) => {
-        console.error('Erreur lors du désabonnement:', error);
-        this.showToaster('Erreur lors du désabonnement', 'error');
-      }
-    );
-  }
+  // Désabonnement supprimé avec la fonctionnalité de sujets
   
   submit(): void {
     if (this.userUpdateForm.invalid) {
@@ -132,7 +114,7 @@ export class MeComponent implements OnInit {
         this.showToaster('Profil mis à jour avec succès', 'success');
         this.loadUserData();
       },
-      (error) => {
+      (error: unknown) => {
         console.error('Erreur lors de la mise à jour du profil:', error);
         this.showToaster('Erreur lors de la mise à jour du profil', 'error');
       }

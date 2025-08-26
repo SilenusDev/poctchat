@@ -1,0 +1,14 @@
+<section>
+  <div class="messages">
+    <div *ngFor="let m of messages" class="message" [ngClass]="{ mine: m.senderId === currentUserId }">
+      <div class="bubble">
+        <div class="content">{{ m.content }}</div>
+        <div class="time">{{ m.sentAt | date:'shortTime' }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="composer">
+    <input [(ngModel)]="content" placeholder="Votre message..." />
+    <button mat-raised-button color="primary" (click)="send()">Envoyer</button>
+  </div>
+</section>

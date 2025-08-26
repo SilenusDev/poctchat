@@ -16,10 +16,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HeaderComponent } from './components/header/header.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { AuthModule } from 'src/app/features/auth/auth.module'; 
-import { SubjectComponent } from './components/subject/subject.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ConversationsComponent } from './components/conversations/conversations.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ChatComponent } from './components/chat/chat.component';
 
 // Définition d'un tableau regroupant tous les modules Angular Material utilisés
 const materialModule = [
@@ -36,8 +37,9 @@ const materialModule = [
     NotFoundComponent,
     MeComponent,  
     HeaderComponent,
-    SubjectComponent,
-    ClickOutsideDirective
+    ConversationsComponent,
+    ClickOutsideDirective,
+    ChatComponent
   ],
   imports: [
     BrowserModule, 
@@ -49,6 +51,7 @@ const materialModule = [
     ...materialModule,
     CommonModule,
     RouterModule,
+    FormsModule,
     AppRoutingModule
   ],
   providers: [
