@@ -1,0 +1,50 @@
+<!-- src/app/features/post/components/detail/detail.component.html -->
+<section class="major">
+  <section class="post-detail-container">
+    <div *ngIf="post" class="post-detail">
+      <nav class="post-detail-head">
+        <a [routerLink]="['/posts']" class="back-arrow">&#8592;</a>
+        <h1>{{ post.title }}</h1>
+      </nav>
+      <div class="card-meta-container">
+        <div class="card-meta">
+          <span class="card-meta-element">Date: {{ post.createdAt | date:'dd/MM/yyyy' }}</span>
+          <span class="card-meta-element">Auteur: {{ post.author.name }}</span>
+        </div>
+        <span class="card-meta-element">Thème: {{ post.subject.name }}</span>
+      </div>
+      <p class="card-text">{{ post.content }}</p>
+    </div>
+    <div class="liner">
+      <hr>
+    </div>
+    
+
+    <div *ngIf="!post" class="loading">
+      Chargement en cours...
+    </div>
+  </section>
+
+  <!-- Section Commentaires -->
+  <section class="comments-container">
+    <h2>Commentaires</h2>
+    <div *ngFor="let comment of comments">
+      <div class="comment-container"> 
+        <p class="comment-author">{{ comment.authorName }}</p>
+
+        <small class="comment-content">{{ comment.content }}</small>
+      </div>
+    </div>
+    <!-- Formulaire d'ajout de commentaire  -->
+    <form class="comment-form" (ngSubmit)="onSubmit()">
+      <div class="comment-form-container">
+        <div class="comment-form-fields">
+          <input type="hidden" [(ngModel)]="newComment.author_id" name="author_id">
+          <input type="hidden" [(ngModel)]="newComment.post_id" name="post_id">
+          <textarea [(ngModel)]="newComment.content" name="content" placeholder="Écrivez ici votre commentaire"></textarea>
+        </div>
+        <button type="submit"><mat-icon>send</mat-icon></button>
+      </div>
+    </form>
+  </section>
+</section>

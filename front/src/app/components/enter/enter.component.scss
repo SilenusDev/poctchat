@@ -1,0 +1,27 @@
+/* Conteneur principal centré */
+.enter-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Pleine hauteur */
+    text-align: center;
+    padding: 20px;
+  }
+  
+  /* Logo - taille différente pour mobile et desktop */
+  .logo {
+    width: 100%;
+    max-width: 600px; /* 600px sur desktop, s'adapte sur mobile */
+    margin-bottom: 20px; /* Espacement entre le logo et les boutons */
+  }
+  
+  /* Conteneur des boutons */
+  .button-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px; /* Espacement entre les boutons */
+  }
+  
+  

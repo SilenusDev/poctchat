@@ -1,0 +1,26 @@
+<section class="major">
+  <nav class="nav-post">
+    <a routerLink="/posts/create" class="btn-prim">Créer une article</a>
+    <div class="sort-dropdown">
+      <span class="sort-option" (click)="toggleSortMenu()">Trier par {{ currentSortLabel }} <span class="arrow">&#9660;</span></span>
+      <div class="sort-menu" *ngIf="showSortMenu">
+        <div class="sort-item" (click)="sortBy('date', 'Date (récent)')">Date (récent)</div>
+        <div class="sort-item" (click)="sortBy('date-asc', 'Date (ancien)')">Date (ancien)</div>
+        <div class="sort-item" (click)="sortBy('author', 'Auteur')">Auteur</div>
+      </div>
+    </div>
+  </nav>   
+  <!-- Conteneur pour les cartes -->
+  <div class="card-container">
+    <div *ngFor="let post of posts" class="card" [routerLink]="['/posts/detail', post.id]">
+      <div class="card-body">
+        <h5 class="card-title">{{ post.title }}</h5>
+        <div class="card-meta">
+          <span class="card-meta-element">Date: {{ post.createdAt | date:'dd/MM/yyyy' }}</span>
+          <span class="card-meta-element">Auteur: {{ post.author.name }}</span>
+        </div>
+        <p class="card-text">{{ post.content | slice:0:100 }}...</p>
+      </div>
+    </div>
+  </div>
+</section>

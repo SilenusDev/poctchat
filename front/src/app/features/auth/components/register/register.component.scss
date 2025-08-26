@@ -1,0 +1,15 @@
+.error-message {
+    color: #f44336;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+  }
+  
+  .form-field {
+    margin-bottom: 15px;
+    position: relative;
+  }
+  
+  input.ng-invalid.ng-touched {
+    border: 1px solid #f44336;
+  }

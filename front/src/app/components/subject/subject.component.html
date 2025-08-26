@@ -1,0 +1,31 @@
+<section class="major">
+  <!-- Conteneur pour les cartes -->
+  <div class="card-container" *ngIf="isDataLoaded">
+    <div class="card" *ngFor="let subject of subjects">
+      <div class="card-body">
+        <h5 class="card-title">{{ subject.name }}</h5>
+        <p class="card-text">{{ subject.description }}</p>
+
+        <!-- Formulaire pour se désabonner -->
+        <form *ngIf="isSubscribed(subject.id)" [formGroup]="unsubscribeForms[subject.id]" (ngSubmit)="onUnsubscribe(subject.id)">
+          <input type="hidden" formControlName="userId">
+          <input type="hidden" formControlName="subjectId">
+          <button type="submit" class="btn-outline-prim">Déjà abonné</button>
+        </form>
+
+        <!-- Formulaire pour s'abonner -->
+        <form *ngIf="!isSubscribed(subject.id)" [formGroup]="unsubscribeForms[subject.id]" (ngSubmit)="onSubscribe(subject.id)">
+          <input type="hidden" formControlName="userId">
+          <input type="hidden" formControlName="subjectId">
+          <button type="submit" class="btn-prim">S'abonner</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Optionnel: Affichage d'un loader si les données ne sont pas encore chargées -->
+  <div *ngIf="!isDataLoaded">Chargement des sujets...</div>
+</section>
+
+
+

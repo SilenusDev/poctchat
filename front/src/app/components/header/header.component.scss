@@ -1,0 +1,108 @@
+/* Conteneur principal */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Conteneur pour le logo */
+.logo-container {
+  flex: 1;
+}
+
+/* Style du logo */
+.logo {
+  max-height: 40px; /* Ajuster selon la taille de ton logo */
+}
+
+/* Conteneur pour les liens de navigation */
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.space-R {
+  margin-left: 0;
+}
+
+/* Ajouter ces styles à votre fichier SCSS */
+.nav-link {
+  margin-left: 20px;
+  font-size: 16px;
+  text-decoration: none;
+  color: #7451eb;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #563db6; /* Couleur un peu plus foncée au survol */
+  }
+  
+  &.active {
+    color: #563db6;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
+
+/* Style pour l'icône utilisateur */
+.user-icon mat-icon {
+  font-size: 24px;
+}
+
+/* Bouton du menu hamburger (caché par défaut sur desktop) */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #7451eb;
+  padding: 5px;
+  
+  mat-icon {
+    font-size: 28px;
+  }
+}
+
+/* Media query pour les écrans de moins de 768px */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block; /* Afficher le bouton menu */
+    order: 2;
+  }
+
+  .space-R {
+    margin-right: 10px;
+  }
+  
+  .nav-links {
+    display: none; /* Cacher la navigation par défaut */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    z-index: 100;
+
+    /* Afficher le menu en colonne et aligner à droite */
+    align-items: flex-end;
+    text-align: right;
+    
+    
+    &.open {
+      display: flex; /* Afficher quand le menu est ouvert */
+    }
+    
+    .nav-link {
+      margin: 10px 20px;
+      width: calc(100% - 40px);
+      padding: 5px 0;
+    }
+  }
+}

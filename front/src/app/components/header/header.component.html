@@ -1,0 +1,20 @@
+<header *ngIf="showHeader" class="header-container" clickOutside (clickOutside)="closeMenu()">
+  <div class="logo-nav">
+    <img src="assets/images/logo.png" alt="Logo" class="logo">
+  </div>
+
+  <ng-container *ngIf="!showLogoOnly">
+    <button class="menu-toggle" (click)="toggleMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <nav class="nav-links" [class.open]="isMenuOpen">
+      <a class="logout space-R" (click)="logout()">Se déconnecter</a>
+      <a routerLink="/posts" class="nav-link" [class.active]="isPostsPage()">Articles</a>
+      <a routerLink="/subjects" class="nav-link" [class.active]="isSubjectsPage()">Thèmes</a>
+      <a routerLink="/me" class="nav-link user-icon">
+        <mat-icon>account_circle</mat-icon>
+      </a>
+    </nav>
+  </ng-container>
+</header>
