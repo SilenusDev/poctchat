@@ -23,6 +23,10 @@ export class ConversationService {
   public getMessages(conversationId: number): Observable<any[]> {
     return this.httpClient.get<any[]>(`${this.baseUrl}/${conversationId}/messages`);
   }
+
+  public getConversation(conversationId: number): Observable<ConversationDTO> {
+    return this.httpClient.get<ConversationDTO>(`${this.baseUrl}/${conversationId}`);
+  }
 }
 
 

@@ -47,6 +47,29 @@ export class ConversationsComponent implements OnInit {
   openConversation(conv: ConversationDTO): void {
     this.router.navigate(['/chat', conv.id]);
   }
+
+  getOtherUserName(conversation: ConversationDTO): string {
+    if (!this.me) return 'Utilisateur inconnu';
+    
+    const otherUser = conversation.user1.id === this.me.id ? conversation.user2 : conversation.user1;
+    return otherUser.username || otherUser.name || `Utilisateur ${otherUser.id}`;
+  }
+
+  getOtherUserDisplayName(conversation: ConversationDTO): string {
+    if (!this.me) return 'Utilisateur inconnu';
+    
+    const otherUser = conversation.user1.id === this.me.id ? conversation.user2 : conversation.user1;
+    const userName = otherUser.username || otherUser.name || `Utilisateur ${otherUser.id}`;
+    
+    // Ajouter le rôle devant le nom
+    if ((otherUser as any).role === 'ADMIN') {
+      return `ADMIN ${userName}`;
+    } else if ((otherUser as any).role === 'CLIENT') {
+      return `CLIENT ${userName}`;
+    }
+    
+    return userName;
+  }
 }
 
 

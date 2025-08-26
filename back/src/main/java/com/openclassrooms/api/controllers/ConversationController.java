@@ -78,12 +78,49 @@ public class ConversationController {
         }
     }
 
+    @Operation(summary = "Get conversation details", description = "Retourne les détails d'une conversation avec les informations des utilisateurs")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Conversation récupérée",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ConversationDTO.class))),
+            @ApiResponse(responseCode = "404", description = "Conversation non trouvée"),
+            @ApiResponse(responseCode = "403", description = "Accès interdit")
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<ConversationDTO> getConversation(Authentication authentication, @org.springframework.web.bind.annotation.PathVariable Long id) {
+        String email = authentication.getName();
+        MDC.put("operation", "get_conversation");
+        MDC.put("email", email);
+        MDC.put("conversationId", String.valueOf(id));
+        
+        try {
+            logger.info("Retrieving conversation {} for user: {}", id, email);
+            
+            Conversation conversation = conversationRepository.findById(id).orElse(null);
+            if (conversation == null) {
+                logger.warn("Conversation {} not found", id);
+                return ResponseEntity.notFound().build();
+            }
+            
+            User user = userRepository.findByEmail(email).orElse(null);
+            if (user == null || (!conversation.getUser1().getId().equals(user.getId()) && !conversation.getUser2().getId().equals(user.getId()))) {
+                logger.warn("User {} not authorized to access conversation {}", email, id);
+                return ResponseEntity.status(403).build();
+            }
+            
+            logger.debug("Conversation {} retrieved successfully for user {}", id, email);
+            return ResponseEntity.ok(ConversationDTO.fromEntity(conversation));
+        } finally {
+            MDC.clear();
+        }
+    }
+
     @Operation(summary = "Get conversation messages", description = "Retourne l'historique des messages d'une conversation")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Messages récupérés",
                     content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "404", description = "Conversation non trouvée")
     })
+
     @GetMapping("/{id}/messages")
     public ResponseEntity<List<MessageDTO>> getMessages(Authentication authentication, @org.springframework.web.bind.annotation.PathVariable Long id) {
         // Vérifie que la conversation existe et que l'utilisateur y participe

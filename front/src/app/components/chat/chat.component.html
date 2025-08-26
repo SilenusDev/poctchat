@@ -1,14 +1,42 @@
-<section>
-  <div class="messages">
-    <div *ngFor="let m of messages" class="message" [ngClass]="{ mine: m.senderId === currentUserId }">
-      <div class="bubble">
-        <div class="content">{{ m.content }}</div>
-        <div class="time">{{ m.sentAt | date:'shortTime' }}</div>
+<div class="chat-container">
+  <div class="chat-card">
+    <!-- Formulaire en haut -->
+    <div class="composer">
+      <div class="composer-inner">
+        <input 
+          [(ngModel)]="content" 
+          placeholder="Tapez votre message..." 
+          (keydown.enter)="send()"
+          class="message-input"
+        />
+        <button 
+          class="send-button" 
+          (click)="send()"
+          [disabled]="!content.trim()"
+        >
+          <span>Envoyer</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Messages en dessous, dernier message en haut -->
+    <div class="messages-container" #messagesList>
+      <div class="messages">
+        <div 
+          *ngFor="let m of messages.slice().reverse(); let i = index" 
+          class="message" 
+          [ngClass]="{ mine: m.senderId === currentUserId }"
+        >
+          <div class="message-header" *ngIf="!isSameUser(i)">
+            <span class="username">{{ getUserName(m.senderId) }}</span>
+            <span class="timestamp">{{ m.sentAt | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <div class="bubble">
+            <div class="content">{{ m.content }}</div>
+            <div class="time" *ngIf="isSameUser(i)">{{ m.sentAt | date:'HH:mm' }}</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="composer">
-    <input [(ngModel)]="content" placeholder="Votre message..." />
-    <button mat-raised-button color="primary" (click)="send()">Envoyer</button>
-  </div>
-</section>
+</div>
