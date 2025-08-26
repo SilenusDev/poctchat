@@ -7,7 +7,6 @@ import { LoginRequest } from '../interfaces/loginRequest.interface';
 import { AuthSuccess  } from '../interfaces/authSuccess.interface';
 import { RegisterRequest } from '../interfaces/registerRequest.interface';
 import { User } from 'src/app/interfaces/user.interface';
-import { Subject } from 'src/app/interfaces/subject.interface';
 import { MeResponse } from 'src/app/interfaces/me-response.interface';
 
 
@@ -40,10 +39,9 @@ export class AuthService {
         // Transformer MeResponse en User
         return {
           id: response.id,
-          name: response.name,
+          name: response.username,
           email: response.email,
-          createdAt: response.createdAt,
-          subscribedSubjects: response.subscribedSubjects
+          createdAt: response.createdAt
         };
       })
     );

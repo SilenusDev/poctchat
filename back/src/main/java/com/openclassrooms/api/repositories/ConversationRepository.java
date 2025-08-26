@@ -24,7 +24,7 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
     /**
      * Find all conversations for a specific user
      */
-    @Query("SELECT c FROM Conversation c WHERE c.user1.id = :userId OR c.user2.id = :userId ORDER BY c.created_at DESC")
+    @Query("SELECT c FROM Conversation c WHERE c.user1.id = :userId OR c.user2.id = :userId ORDER BY c.createdAt DESC")
     List<Conversation> findConversationsByUserId(@Param("userId") Long userId);
     
     /**

@@ -23,7 +23,7 @@ public class Message {
     private String content;
 
     @Column(name = "sent_at")
-    private LocalDateTime sent_at;
+    private LocalDateTime sentAt;
 
     // Constructeur vide nécessaire pour JPA
     public Message() {
@@ -62,11 +62,11 @@ public class Message {
         this.content = content;
     }
 
-    public LocalDateTime getSent_at() {
-        return sent_at;
+    public LocalDateTime getSentAt() {
+        return sentAt;
     }
 
-    public void setSent_at(LocalDateTime sent_at) {
-        this.sent_at = sent_at;
+    public void setSentAt(LocalDateTime sentAt) {
+        this.sentAt = sentAt;
     }
 }

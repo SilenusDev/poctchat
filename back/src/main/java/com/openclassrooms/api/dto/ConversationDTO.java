@@ -21,7 +21,7 @@ public class ConversationDTO {
         dto.setId(conversation.getId());
         dto.setUser1(UserDTO.fromEntityWithoutEmail(conversation.getUser1()));
         dto.setUser2(UserDTO.fromEntityWithoutEmail(conversation.getUser2()));
-        dto.setCreatedAt(conversation.getCreated_at());
+        dto.setCreatedAt(conversation.getCreatedAt());
         return dto;
     }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { MeResponse } from 'src/app/interfaces/me-response.interface';
-import { Subject } from 'src/app/interfaces/subject.interface';
+import { User } from 'src/app/interfaces/user.interface';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 import { UserService } from 'src/app/services/user.service';
 import { UserUpdate } from 'src/app/interfaces/userUpdate.interface';
@@ -15,7 +15,6 @@ import { MatSnackBar } from '@angular/material/snack-bar'; // Ajoutez cette impo
 })
 export class MeComponent implements OnInit {
   user: MeResponse | null = null;
-  subjects: Subject[] = [];
   unsubscribeForms: { [key: number]: FormGroup } = {};
   userUpdateForm: FormGroup;
   
@@ -66,9 +65,15 @@ export class MeComponent implements OnInit {
 
   loadUserData(): void {
     this.authService.me().subscribe(
-      (data: MeResponse) => {
-        this.user = data;
-        this.subjects = data.subscribedSubjects;
+      (data: User) => {
+        // Convert User to MeResponse structure for component compatibility
+        this.user = {
+          id: data.id,
+          username: data.name,
+          email: data.email,
+          role: 'CLIENT' as any, // Default role, will be properly set by backend
+          createdAt: data.createdAt
+        };
         this.initUserUpdateForm();
         this.initForms();
       },
@@ -84,7 +89,7 @@ export class MeComponent implements OnInit {
     
     this.userUpdateForm.patchValue({
       id: this.user.id,
-      name: this.user.name,
+      name: this.user.username,
       email: this.user.email
     });
   }
@@ -92,12 +97,7 @@ export class MeComponent implements OnInit {
   initForms(): void {
     if (!this.user) return;
     this.unsubscribeForms = {};
-    this.subjects.forEach((subject) => {
-      this.unsubscribeForms[subject.id] = this.fb.group({
-        userId: [this.user!.id],
-        subjectId: [subject.id],
-      });
-    });
+    // Subject functionality removed as it's not part of the current UserDTO structure
   }
 
   onUnsubscribe(subjectId: number): void {
@@ -108,7 +108,6 @@ export class MeComponent implements OnInit {
 
     this.subscriptionService.unsubscribeSubject(this.user.id, subjectId).subscribe(
       () => {
-        this.subjects = this.subjects.filter(subject => subject.id !== subjectId);
         delete this.unsubscribeForms[subjectId];
         this.showToaster('Désabonnement réussi', 'success');
       },

@@ -35,16 +35,10 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     List<Message> findBySenderIdOrderBySentAtDesc(Long senderId);
     
     /**
-     * Find recent messages in a conversation (limit)
+     * Find recent messages in a conversation (order by sentAt desc)
      */
-    @Query("SELECT m FROM Message m WHERE m.conversation.id = :conversationId ORDER BY m.sent_at DESC")
+    @Query("SELECT m FROM Message m WHERE m.conversation.id = :conversationId ORDER BY m.sentAt DESC")
     List<Message> findRecentMessagesByConversationId(@Param("conversationId") Long conversationId);
-    
-    /**
-     * Find messages containing specific content (case insensitive)
-     */
-    @Query("SELECT m FROM Message m WHERE LOWER(m.content) LIKE LOWER(CONCAT('%', :content, '%')) ORDER BY m.sent_at DESC")
-    List<Message> findByContentContainingIgnoreCase(@Param("content") String content);
     
     /**
      * Find messages sent after a specific date
@@ -54,7 +48,7 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     /**
      * Find messages in a conversation sent after a specific date
      */
-    @Query("SELECT m FROM Message m WHERE m.conversation.id = :conversationId AND m.sent_at > :dateTime ORDER BY m.sent_at ASC")
+    @Query("SELECT m FROM Message m WHERE m.conversation.id = :conversationId AND m.sentAt > :dateTime ORDER BY m.sentAt ASC")
     List<Message> findByConversationIdAndSentAtAfter(@Param("conversationId") Long conversationId, @Param("dateTime") LocalDateTime dateTime);
     
     /**
@@ -70,6 +64,5 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     /**
      * Find last message in a conversation
      */
-    @Query("SELECT m FROM Message m WHERE m.conversation.id = :conversationId ORDER BY m.sent_at DESC LIMIT 1")
-    Message findLastMessageByConversationId(@Param("conversationId") Long conversationId);
+    Message findTopByConversationIdOrderBySentAtDesc(Long conversationId);
 }

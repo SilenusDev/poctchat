@@ -1,9 +1,11 @@
-
+import { Role } from './role.interface';
+import { ConversationDTO } from './conversation-dto.interface';
 
 export interface MeResponse {
   id: number;
-  name: string;
+  username: string;
   email: string;
-  createdAt: Date; // Date sous forme de chaîne ISO
-
+  role: Role;
+  createdAt: Date;
+  conversations?: ConversationDTO[];
 }
