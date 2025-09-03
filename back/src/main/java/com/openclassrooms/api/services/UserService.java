@@ -58,9 +58,14 @@ public class UserService {
     }
 
     public String register(String username, String email, String password) {
-        logger.info("Starting user registration process for email: {}", email);
+        return register(username, email, password, Role.CLIENT);
+    }
+    
+    public String register(String username, String email, String password, Role role) {
+        logger.info("Starting user registration process for email: {} with role: {}", email, role);
         MDC.put("operation", "user_registration");
         MDC.put("email", email);
+        MDC.put("role", role.name());
         
         try {
             if (userRepository.findByEmail(email).isPresent()) {
@@ -68,21 +73,21 @@ public class UserService {
                 throw new RuntimeException("Email déjà utilisé");
             }
 
-            logger.debug("Creating new user entity for username: {} and email: {}", username, email);
+            logger.debug("Creating new user entity for username: {} and email: {} with role: {}", username, email, role);
             User user = new User();
             user.setUsername(username);
             user.setEmail(email);
             user.setPassword(passwordEncoder.encode(password));
-            user.setRole(Role.CLIENT);
+            user.setRole(role);
             user.setCreated_at(LocalDateTime.now());
 
             logger.debug("Saving user to database for email: {}", email);
             userRepository.save(user);
             
-            logger.info("User successfully registered with email: {}, generating JWT token", email);
+            logger.info("User successfully registered with email: {} and role: {}, generating JWT token", email, role);
             String token = jwtService.generateSimpleToken(user.getEmail());
             
-            logger.info("Registration completed successfully for email: {}", email);
+            logger.info("Registration completed successfully for email: {} with role: {}", email, role);
             return token;
             
         } catch (RuntimeException e) {

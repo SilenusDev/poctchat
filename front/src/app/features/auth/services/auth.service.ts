@@ -41,6 +41,7 @@ export class AuthService {
           id: response.id,
           name: response.username,
           email: response.email,
+          role: response.role,  // Inclure le rôle dans la transformation
           createdAt: response.createdAt
         };
       })

@@ -32,11 +32,21 @@ export class AppComponent implements OnInit {
   }
 
   public autoLog(): void {
+    // Vérifier si un token existe avant d'appeler /me
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // Pas de token, déconnecter directement
+      this.sessionService.logOut();
+      return;
+    }
+
+    // Token présent, vérifier sa validité avec /me
     this.authService.me().subscribe(
       (user: User) => {
         this.sessionService.logIn(user);
       },
       (_) => {
+        // Token invalide ou expiré
         this.sessionService.logOut();
       }
     )

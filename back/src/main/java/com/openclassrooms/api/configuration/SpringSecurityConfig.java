@@ -83,7 +83,7 @@ public class SpringSecurityConfig {
             .map(user -> org.springframework.security.core.userdetails.User.builder()
                 .username(user.getEmail())
                 .password(user.getPassword())
-                .roles("CLIENT")
+                .roles(user.getRole().name())  // Utilise le rôle réel de l'utilisateur
                 .build())
             .orElseThrow(() -> new RuntimeException("User not found"));
     }

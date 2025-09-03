@@ -1,13 +1,17 @@
 <div class="conversations-container">
   <div class="conversations-card" *ngIf="!isLoading">
+    <!-- Titre de l'interface -->
+    <div class="interface-header">
+      <h2 class="interface-title">
+        <span *ngIf="me?.role === 'CLIENT'">Interface Utilisateur</span>
+        <span *ngIf="me?.role === 'ADMIN'">Interface Administratif</span>
+      </h2>
+    </div>
+    
     <!-- Profil utilisateur -->
     <div class="user-profile">
       <div class="user-info">
-        <h3 class="user-name">
-          <span *ngIf="me?.role === 'CLIENT'" class="role-badge">CLIENT</span>
-          <span *ngIf="me?.role === 'ADMIN'" class="role-badge admin">ADMIN</span>
-          {{ me?.username }}
-        </h3>
+        <h3 class="user-name">{{ me?.username }}</h3>
         <p class="user-email">{{ me?.email }}</p>
         <small class="user-date">Créé le {{ me?.createdAt | date:'dd/MM/yyyy' }}</small>
       </div>

@@ -2,6 +2,7 @@
 $primary-color: #1976d2;
 $primary-hover: darken($primary-color, 8%);
 $primary-light: #e3f2fd;
+$admin-color: #ff5722;
 $transition-speed: 0.3s;
 $shadow: rgba(0, 0, 0, 0.12);
 $shadow-hover: rgba(0, 0, 0, 0.2);
@@ -28,6 +29,46 @@ $shadow-hover: rgba(0, 0, 0, 0.2);
 
   &:hover {
     box-shadow: 6px 10px 15px $shadow-hover;
+  }
+}
+
+// Titre de l'interface
+.interface-header {
+  background: linear-gradient(135deg, $primary-color, $primary-hover);
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid rgba($primary-color, 0.1);
+
+  @media (max-width: 768px) {
+    padding: 16px;
+  }
+}
+
+.interface-title {
+  margin: 0;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  span {
+    display: inline-block;
+    animation: fadeIn 0.6s ease-in-out;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
