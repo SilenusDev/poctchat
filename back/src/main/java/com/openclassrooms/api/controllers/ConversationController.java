@@ -180,7 +180,7 @@ public class ConversationController {
             final ConversationTitre finalTitre = titreToUse;
 
             Conversation conversation = conversationRepository
-                    .findConversationBetweenUsers(current.getId(), adminUser.getId())
+                    .findConversationBetweenUsersWithTitle(current.getId(), adminUser.getId(), finalTitre)
                     .orElseGet(() -> {
                         Conversation c = new Conversation();
                         c.setUser1(current);

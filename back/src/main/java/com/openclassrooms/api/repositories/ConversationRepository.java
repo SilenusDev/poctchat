@@ -52,4 +52,15 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
      */
     @Query("SELECT COUNT(c) FROM Conversation c WHERE c.user1.id = :userId OR c.user2.id = :userId")
     Long countConversationsByUserId(@Param("userId") Long userId);
+    
+    /**
+     * Find conversation between two users with specific title
+     */
+    @Query("SELECT c FROM Conversation c WHERE " +
+           "((c.user1.id = :user1Id AND c.user2.id = :user2Id) OR " +
+           "(c.user1.id = :user2Id AND c.user2.id = :user1Id)) AND " +
+           "c.titre = :titre")
+    Optional<Conversation> findConversationBetweenUsersWithTitle(@Param("user1Id") Long user1Id, 
+                                                                @Param("user2Id") Long user2Id, 
+                                                                @Param("titre") com.openclassrooms.api.models.ConversationTitre titre);
 }
