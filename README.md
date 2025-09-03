@@ -115,5 +115,6 @@ poc-tchat/
 ## 🔐 Comptes de connexion
 
 User : sam@user.com / User!1234
+User : max@user.com / User!1234
 Admin : tom@admin.com / Admin!1234
 
