@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
 
   public autoLog(): void {
     // Vérifier si un token existe avant d'appeler /me
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (!token) {
       // Pas de token, déconnecter directement
       this.sessionService.logOut();

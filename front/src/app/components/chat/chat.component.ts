@@ -48,16 +48,17 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
           console.error('Erreur lors de la récupération de la conversation:', error);
         }
       });
-    });
-    
-    // Charger l'historique
-    this.conversationService.getMessages(this.conversationId).subscribe(msgs => {
-      this.messages = msgs;
-      this.scrollToTop();
-    });
-    this.chatService.connect(this.conversationId, this.currentUserId!, (msg) => {
-      this.messages.push(msg);
-      this.scrollToTop();
+      
+      // Charger l'historique et connecter le WebSocket APRÈS avoir récupéré l'utilisateur
+      this.conversationService.getMessages(this.conversationId).subscribe(msgs => {
+        this.messages = msgs;
+        this.scrollToTop();
+      });
+      
+      this.chatService.connect(this.conversationId, this.currentUserId, (msg) => {
+        this.messages.push(msg);
+        this.scrollToTop();
+      });
     });
   }
 

@@ -75,7 +75,7 @@ export class RegisterComponent {
       const registerRequest = this.form.value as RegisterRequest;
       this.authService.register(registerRequest).subscribe({
         next: (response: AuthSuccess) => {
-          localStorage.setItem('token', response.token);
+          sessionStorage.setItem('token', response.token);
           this.authService.me().subscribe({
             next: (user: User) => {
               this.sessionService.logIn(user);
