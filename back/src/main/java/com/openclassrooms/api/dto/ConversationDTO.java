@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 
 import com.openclassrooms.api.models.Conversation;
+import com.openclassrooms.api.models.ConversationTitre;
 
 @Data
 @NoArgsConstructor
@@ -14,6 +15,7 @@ public class ConversationDTO {
     private Long id;
     private UserDTO user1;
     private UserDTO user2;
+    private ConversationTitre titre;
     private LocalDateTime createdAt;
     
     public static ConversationDTO fromEntity(Conversation conversation) {
@@ -21,6 +23,7 @@ public class ConversationDTO {
         dto.setId(conversation.getId());
         dto.setUser1(UserDTO.fromEntityWithoutEmail(conversation.getUser1()));
         dto.setUser2(UserDTO.fromEntityWithoutEmail(conversation.getUser2()));
+        dto.setTitre(conversation.getTitre());
         dto.setCreatedAt(conversation.getCreatedAt());
         return dto;
     }

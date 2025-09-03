@@ -54,6 +54,11 @@ export class HeaderComponent implements OnInit {
     this.sessionService.logOut();
     this.router.navigate(['/enter']); // Redirige vers la page de connexion après déconnexion
   }
+
+  goToConversations(): void {
+    this.router.navigate(['/conversations']);
+    this.closeMenu();
+  }
   
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;

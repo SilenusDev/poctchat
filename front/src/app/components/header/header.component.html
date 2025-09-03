@@ -1,6 +1,6 @@
 <header *ngIf="showHeader" class="header-container" clickOutside (clickOutside)="closeMenu()">
   <div class="logo-nav">
-    <img src="" alt="Logo" class="logo">
+    <img src="assets/images/logo.png" alt="Logo" class="logo-small">
   </div>
 
   <ng-container *ngIf="!showLogoOnly">
@@ -9,11 +9,16 @@
     </button>
 
     <nav class="nav-links" [class.open]="isMenuOpen">
-      <a class="logout space-R" (click)="logout()">Se déconnecter</a>
+      <button class="header-button logout-button" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <!-- <span>Se déconnecter</span> -->
+      </button>
       
-      <a routerLink="/conversations" class="nav-link user-icon">
-        <mat-icon>account_circle</mat-icon>
-      </a>
+      <button class="header-button conversations-button" (click)="goToConversations()">
+        <mat-icon>chat</mat-icon>
+        <!-- <span>Conversations</span> -->
+      </button>
     </nav>
   </ng-container>
+
 </header>

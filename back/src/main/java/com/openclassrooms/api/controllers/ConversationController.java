@@ -1,9 +1,11 @@
 package com.openclassrooms.api.controllers;
 
 import com.openclassrooms.api.dto.ConversationDTO;
+import com.openclassrooms.api.dto.ContactSupportRequestDTO;
 import com.openclassrooms.api.models.User;
 import com.openclassrooms.api.models.Role;
 import com.openclassrooms.api.models.Conversation;
+import com.openclassrooms.api.models.ConversationTitre;
 import com.openclassrooms.api.repositories.ConversationRepository;
 import com.openclassrooms.api.repositories.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -144,7 +146,7 @@ public class ConversationController {
                     content = @Content(mediaType = "application/json"))
     })
     @PostMapping("/contact-support")
-    public ResponseEntity<ConversationDTO> contactSupport(Authentication authentication) {
+    public ResponseEntity<ConversationDTO> contactSupport(Authentication authentication, @org.springframework.web.bind.annotation.RequestBody(required = false) ContactSupportRequestDTO request) {
         String email = authentication.getName();
         MDC.put("operation", "contact_support");
         MDC.put("email", email);
@@ -166,12 +168,24 @@ public class ConversationController {
                 adminUser = admins.get(0);
             }
 
+            // Déterminer le titre de la conversation
+            ConversationTitre titreToUse = ConversationTitre.AUTRE; // valeur par défaut
+            if (request != null && request.getTitre() != null) {
+                try {
+                    titreToUse = ConversationTitre.valueOf(request.getTitre());
+                } catch (IllegalArgumentException e) {
+                    logger.warn("Invalid titre value: {}, using default AUTRE", request.getTitre());
+                }
+            }
+            final ConversationTitre finalTitre = titreToUse;
+
             Conversation conversation = conversationRepository
                     .findConversationBetweenUsers(current.getId(), adminUser.getId())
                     .orElseGet(() -> {
                         Conversation c = new Conversation();
                         c.setUser1(current);
                         c.setUser2(adminUser);
+                        c.setTitre(finalTitre);
                         c.setCreatedAt(java.time.LocalDateTime.now());
                         return conversationRepository.save(c);
                     });

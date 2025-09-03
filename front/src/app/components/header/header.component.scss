@@ -19,17 +19,69 @@
   max-height: 40px; /* Ajuster selon la taille de ton logo */
 }
 
-/* Conteneur pour les liens de navigation */
-.nav-links {
-  display: flex;
-  align-items: center;
+/* Logo petit à gauche */
+.logo-small {
+  max-height: 35px;
+  max-width: 80px;
+  object-fit: contain;
 }
 
 .space-R {
   margin-left: 0;
 }
 
-/* Ajouter ces styles à votre fichier SCSS */
+/* Navigation avec boutons en ligne */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Styles pour les boutons du header */
+.header-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+
+  &:hover {
+    background-color: #1565c0;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  span {
+    font-size: 14px;
+  }
+}
+
+.logout-button {
+  &:hover {
+    background-color: #d32f2f;
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.4);
+  }
+}
+
+/* Anciens styles pour compatibilité */
 .nav-link {
   margin-left: 20px;
   font-size: 16px;
@@ -38,7 +90,7 @@
   transition: color 0.3s ease;
 
   &:hover {
-    color: #563db6; /* Couleur un peu plus foncée au survol */
+    color: #563db6;
   }
   
   &.active {
@@ -46,11 +98,6 @@
     font-weight: bold;
     text-decoration: underline;
   }
-}
-
-/* Style pour l'icône utilisateur */
-.user-icon mat-icon {
-  font-size: 24px;
 }
 
 /* Bouton du menu hamburger (caché par défaut sur desktop) */
@@ -97,6 +144,12 @@
     
     &.open {
       display: flex; /* Afficher quand le menu est ouvert */
+    }
+    
+    .header-button {
+      margin: 10px 20px;
+      width: calc(100% - 40px);
+      justify-content: center;
     }
     
     .nav-link {

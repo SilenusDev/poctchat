@@ -117,6 +117,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<mainClass>com.openclassrooms.api.ApiApplication</mainClass>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.mapstruct</groupId>

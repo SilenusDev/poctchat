@@ -146,26 +146,49 @@ $shadow-hover: rgba(0, 0, 0, 0.2);
   }
 }
 
-.support-button {
-  background-color: $primary-color;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 25px;
+.support-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.support-label {
+  color: $primary-color;
   font-size: 14px;
   font-weight: 600;
+  margin: 0;
+}
+
+.support-select {
+  background-color: white;
+  color: $primary-color;
+  padding: 12px 16px;
+  border: 2px solid $primary-color;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color $transition-speed ease-in-out, transform $transition-speed;
-  box-shadow: 0 2px 8px rgba($primary-color, 0.3);
+  transition: all $transition-speed ease-in-out;
+  box-shadow: 0 2px 8px rgba($primary-color, 0.1);
 
   &:hover {
-    background-color: $primary-hover;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba($primary-color, 0.4);
+    border-color: $primary-hover;
+    box-shadow: 0 4px 12px rgba($primary-color, 0.2);
   }
 
-  &:active {
-    transform: translateY(0);
+  &:focus {
+    outline: none;
+    border-color: $primary-hover;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+
+  option {
+    padding: 8px;
+    color: $primary-color;
   }
 
   @media (max-width: 768px) {
@@ -252,7 +275,7 @@ $shadow-hover: rgba(0, 0, 0, 0.2);
   margin-bottom: 12px;
 }
 
-.conversation-id {
+.conversation-title-header {
   font-weight: 600;
   color: $primary-color;
   font-size: 14px;
@@ -268,12 +291,27 @@ $shadow-hover: rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 8px;
 }
 
 .participant {
   font-size: 14px;
   color: rgba($primary-color, 0.8);
   font-weight: 500;
+}
+
+.conversation-details {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba($primary-color, 0.1);
+}
+
+.conversation-title {
+  font-size: 12px;
+  color: rgba($primary-color, 0.7);
+  font-weight: 500;
+  font-style: italic;
+  text-align: center;
 }
 
 .conversation-status {

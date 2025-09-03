@@ -20,6 +20,10 @@ public class Conversation {
     @JoinColumn(name = "user2_id", nullable = false)
     private User user2;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "titre", nullable = false)
+    private ConversationTitre titre = ConversationTitre.AUTRE;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -69,5 +73,13 @@ public class Conversation {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+    }
+
+    public ConversationTitre getTitre() {
+        return titre;
+    }
+
+    public void setTitre(ConversationTitre titre) {
+        this.titre = titre;
     }
 }

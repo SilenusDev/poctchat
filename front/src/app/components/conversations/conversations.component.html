@@ -16,9 +16,15 @@
         <small class="user-date">Créé le {{ me?.createdAt | date:'dd/MM/yyyy' }}</small>
       </div>
       <div class="support-action" *ngIf="me?.role !== 'ADMIN'">
-        <button class="support-button" (click)="contactSupport()">
-          <span>Contacter le support</span>
-        </button>
+        <div class="support-selector">
+          <label for="supportType" class="support-label">Contacter le support :</label>
+          <select id="supportType" class="support-select" (change)="contactSupport($event)">
+            <option value="">Choisir un type de demande</option>
+            <option value="PROBLEME_LOCATION">Problème de location</option>
+            <option value="DEMANDE_REPARATION">Demande de réparation</option>
+            <option value="AUTRE">Autre demande</option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -35,11 +41,11 @@
           (click)="openConversation(c)"
         >
           <div class="conversation-header">
-            <div class="conversation-id">Conv. #{{ c.id }}</div>
+            <div class="conversation-title-header">{{ getConversationTitleLabel(c) }}</div>
             <div class="conversation-date">{{ c.createdAt | date:'dd/MM/yyyy HH:mm' }}</div>
           </div>
           <div class="conversation-participants">
-            <div class="participant">{{ getOtherUserDisplayName(c) }}</div>
+            <div class="participant">{{ getUser1DisplayName(c) }}</div>
             <div class="conversation-status">
               <span class="status-indicator"></span>
               <span class="status-text">Active</span>

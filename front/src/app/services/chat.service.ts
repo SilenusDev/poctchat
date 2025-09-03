@@ -7,10 +7,20 @@ export class ChatService {
   private client: Client | null = null;
   private isConnected = false;
   private sendQueue: Array<{ id: number; payload: any }> = [];
+  private currentUserId: number | null = null;
 
-  connect(conversationId: number, onMessage: (msg: any) => void): void {
+  connect(conversationId: number, userId: number, onMessage: (msg: any) => void): void {
+    // Déconnecter la connexion précédente si elle existe
+    if (this.client && this.currentUserId !== userId) {
+      this.disconnect();
+    }
+
+    this.currentUserId = userId;
     this.client = new Client({
-      webSocketFactory: () => new SockJS('/ws')
+      webSocketFactory: () => new SockJS('/ws'),
+      connectHeaders: {
+        'userId': userId.toString()
+      }
     });
 
     this.client.onConnect = () => {
@@ -35,6 +45,7 @@ export class ChatService {
     this.client?.deactivate();
     this.client = null;
     this.isConnected = false;
+    this.currentUserId = null;
   }
 
   sendMessage(conversationId: number, payload: any): void {

@@ -15,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent  {
   public hide = true;
   public onError = false;
+  public errorMessage = '';
 
   public form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -36,7 +37,18 @@ export class LoginComponent  {
             this.router.navigate(['/conversations']);
           });
         },
-        error => this.onError = true
+        error => {
+          this.onError = true;
+          if (error.status === 401) {
+            this.errorMessage = 'Email ou mot de passe incorrect. Veuillez vérifier vos identifiants.';
+          } else if (error.status === 0) {
+            this.errorMessage = 'Impossible de se connecter au serveur. Veuillez réessayer plus tard.';
+          } else if (error.status >= 500) {
+            this.errorMessage = 'Erreur serveur temporaire. Veuillez réessayer dans quelques instants.';
+          } else {
+            this.errorMessage = 'Une erreur inattendue s\'est produite. Veuillez réessayer.';
+          }
+        }
       );
     }
 }

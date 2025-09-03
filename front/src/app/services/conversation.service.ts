@@ -16,8 +16,9 @@ export class ConversationService {
     return this.httpClient.get<ConversationDTO[]>(`${this.baseUrl}/my`);
   }
 
-  public contactSupport(): Observable<ConversationDTO> {
-    return this.httpClient.post<ConversationDTO>(`${this.baseUrl}/contact-support`, {});
+  public contactSupport(titre?: string): Observable<ConversationDTO> {
+    const body = titre ? { titre } : {};
+    return this.httpClient.post<ConversationDTO>(`${this.baseUrl}/contact-support`, body);
   }
 
   public getMessages(conversationId: number): Observable<any[]> {

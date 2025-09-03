@@ -1,5 +1,12 @@
 <div class="chat-container">
   <div class="chat-card">
+    <!-- En-tête de conversation -->
+    <div class="conversation-header" *ngIf="conversation && otherUser">
+      <span class="conversation-title">
+        {{ getOtherUserName() }} : {{ getConversationTitleLabel() }}
+      </span>
+    </div>
+    
     <!-- Formulaire en haut -->
     <div class="composer">
       <div class="composer-inner">

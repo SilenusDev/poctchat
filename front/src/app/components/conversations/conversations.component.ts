@@ -33,15 +33,24 @@ export class ConversationsComponent implements OnInit {
     });
 
     this.conversationService.getMyConversations().subscribe(items => {
+      console.log('Conversations reçues:', items);
+      items.forEach(conv => {
+        console.log(`Conversation ${conv.id}: titre = "${conv.titre}"`);
+      });
       this.conversations = [...items].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       this.isLoading = false;
     });
   }
 
-  contactSupport(): void {
-    this.conversationService.contactSupport().subscribe(conv => {
-      this.router.navigate(['/chat', conv.id]);
-    });
+  contactSupport(event: any): void {
+    const selectedType = event.target.value;
+    if (selectedType) {
+      this.conversationService.contactSupport(selectedType).subscribe(conv => {
+        this.router.navigate(['/chat', conv.id]);
+      });
+      // Reset the select after creating conversation
+      event.target.value = '';
+    }
   }
 
   openConversation(conv: ConversationDTO): void {
@@ -69,6 +78,41 @@ export class ConversationsComponent implements OnInit {
     }
     
     return userName;
+  }
+
+  getUser1DisplayName(conversation: ConversationDTO): string {
+    const user1 = conversation.user1;
+    const userName = user1.username || user1.name || `Utilisateur ${user1.id}`;
+    
+    // Ajouter le rôle devant le nom
+    if ((user1 as any).role === 'ADMIN') {
+      return `ADMIN ${userName}`;
+    } else if ((user1 as any).role === 'CLIENT') {
+      return `CLIENT ${userName}`;
+    }
+    
+    return userName;
+  }
+
+  getConversationTitleLabel(conversation: ConversationDTO): string {
+    console.log('getConversationTitleLabel appelé pour conversation:', conversation.id, 'titre:', conversation.titre);
+    
+    if (!conversation.titre) {
+      console.log('Pas de titre trouvé, retour par défaut');
+      return 'Autre demande';
+    }
+    
+    switch (conversation.titre) {
+      case 'PROBLEME_LOCATION':
+        return 'Problème de location';
+      case 'DEMANDE_REPARATION':
+        return 'Demande de réparation';
+      case 'AUTRE':
+        return 'Autre demande';
+      default:
+        console.log('Titre non reconnu:', conversation.titre);
+        return 'Autre demande';
+    }
   }
 }
 

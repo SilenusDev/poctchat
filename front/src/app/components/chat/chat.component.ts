@@ -55,7 +55,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       this.messages = msgs;
       this.scrollToTop();
     });
-    this.chatService.connect(this.conversationId, (msg) => {
+    this.chatService.connect(this.conversationId, this.currentUserId!, (msg) => {
       this.messages.push(msg);
       this.scrollToTop();
     });
@@ -84,6 +84,30 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       return this.otherUser.username || this.otherUser.name || `Utilisateur ${senderId}`;
     }
     return `Utilisateur ${senderId}`;
+  }
+
+  getOtherUserName(): string {
+    if (this.otherUser) {
+      return this.otherUser.username || this.otherUser.name || `Utilisateur ${this.otherUser.id}`;
+    }
+    return 'Utilisateur inconnu';
+  }
+
+  getConversationTitleLabel(): string {
+    if (!this.conversation?.titre) {
+      return 'Autre demande';
+    }
+    
+    switch (this.conversation.titre) {
+      case 'PROBLEME_LOCATION':
+        return 'Problème de location';
+      case 'DEMANDE_REPARATION':
+        return 'Demande de réparation';
+      case 'AUTRE':
+        return 'Autre demande';
+      default:
+        return 'Autre demande';
+    }
   }
 
   isSameUser(index: number): boolean {
